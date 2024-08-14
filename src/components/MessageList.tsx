@@ -22,7 +22,7 @@ const MessageList = ({ messages }: Props) => {
           >
             <div
               className={cn(
-                "rounded-lg px-3 text-sm py-1 shadow-md right-1 ring-gray-900/10",
+                "rounded-lg px-3 text-sm py-1 shadow-md right-1 ring-gray-900/10 dark:text-slate-100",
                 {
                   "bg-blue-600 text-white": message.role === "user",
                 }

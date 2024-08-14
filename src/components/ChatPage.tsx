@@ -37,7 +37,7 @@ const ChatPage = ({ chatId, chats }: Props) => {
         <div className="max-h-screen p-3 overflow-hidden flex-[5]">
           <PDFViewer pdf_url={currentChat?.pdfUrl || ""} />
         </div>
-        <div className="flex-[3] max-w-md border-l-4 border-l-slate-200">
+        <div className="flex-[3] max-w-md border-l-4 border-l-slate-200 dark:bg-slate-900">
           <ChatComponent chatId={chatId} />
         </div>
       </div>
@@ -54,15 +54,15 @@ const ChatPage = ({ chatId, chats }: Props) => {
           </div>
         ) : null}
 
-        <div className="flex flex-col w-full h-screen justify-between">
+        <div className="flex flex-col w-full h-screen justify-between dark:bg-slate-900">
           <div className="flex flex-row gap-1 m-2">
             <button
               onClick={() => setPanelVisible(!panelVisible)}
-              className="text-center border rounded-xl p-1"
+              className="text-center border rounded-xl p-1 text-black dark:text-slate-100"
             >
               <PanelRight />
             </button>
-            <h2 className="text-xs w-full text-center border rounded-xl p-1">
+            <h2 className="text-xs w-full text-center border rounded-xl p-1 text-black dark:text-slate-100">
               {currentChat?.pdfName}
             </h2>
           </div>

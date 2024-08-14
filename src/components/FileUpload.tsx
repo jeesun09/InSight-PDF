@@ -63,19 +63,23 @@ const FileUpload = () => {
       <div
         {...getRootProps({
           className:
-            "border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 py-8 flex justify-center items-center flex-col",
+            "border-dashed border-2 rounded-xl cursor-pointer bg-gray-50 dark:bg-slate-500 py-8 flex justify-center items-center flex-col",
         })}
       >
         <input {...getInputProps()} />
         {uploading || isPending ? (
           <>
             <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
-            <p className="mt-2 text-sm text-slate-400">Uploading your PDF...</p>
+            <p className="mt-2 text-sm text-slate-400 dark:text-stone-200">
+              Uploading your PDF...
+            </p>
           </>
         ) : (
           <>
             <Inbox className="w-10 h-10 text-blue-500" />
-            <p className="mt-2 text-sm text-slate-400">Drop PDF Here</p>
+            <p className="mt-2 text-sm text-slate-400 dark:text-stone-200">
+              Drop PDF Here
+            </p>
           </>
         )}
       </div>
