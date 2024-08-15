@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Facebook, Github, Instagram, Linkedin, Twitter } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -52,7 +52,10 @@ const About = () => {
         <h2 className="text-2xl font-semibold mb-2">Contact Us</h2>
         <p>
           If you have any questions or feedback, feel free to{" "}
-          <Link href="mailto:jeesunbari2002@gmail.com" className="text-blue-500 underline">
+          <Link
+            href="mailto:jeesunbari2002@gmail.com"
+            className="text-blue-500 underline"
+          >
             contact us
           </Link>
           . We would love to hear from you!
@@ -65,6 +68,14 @@ const About = () => {
             className="text-gray-600 hover:text-blue-700"
           >
             <Facebook className="w-8 h-8" />
+          </Link>
+          <Link
+            href="https://github.com/jeesun09"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-600 hover:text-black"
+          >
+            <Github className="w-8 h-8" />
           </Link>
           <Link
             href="https://x.com/JeesunSk"
