@@ -11,8 +11,8 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL("https://insight-pdf.vercel.app/"),
   title: {
-    default: "InSight-PDF",
-    template: "%s - InSight-PDF",
+    default: "InSight PDF",
+    template: "%s - InSight PDF",
   },
   description: "Unlock the Power of Your PDFs with AI-Driven Insights.",
   applicationName: "InSight PDF",
