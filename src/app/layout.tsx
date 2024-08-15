@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://localhost:3000"),
+  metadataBase: new URL("https://insight-pdf.vercel.app/"),
   title: {
     default: "InSight-PDF",
     template: "%s - InSight-PDF",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "InSight PDF - Chat with Your PDFs Using AI",
     description:
       "Unlock the power of your PDFs with InSight PDF, an AI-driven platform that lets you interact with your documents effortlessly. Get insights and answers from your PDFs like never before.",
-    url: "https://localhost:3000",
+    url: "https://insight-pdf.vercel.app/",
     siteName: "InSight PDF",
     images: [
       {
