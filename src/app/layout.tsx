@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://localhost:3000"),
   title: {
     default: "InSight-PDF",
     template: "%s - InSight-PDF",
@@ -29,15 +30,12 @@ export const metadata: Metadata = {
     "AI-driven insights",
     "interact with PDFs",
   ],
-  viewport: "width=device-width, initial-scale=1",
-  creator: "Jeesun Bari",
-  publisher: "Jeesun Bari",
 
   //icons
   icons: {
     icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-icon.png",
+    shortcut: "/images/favicon-16x16.png",
+    apple: "/images/apple-icon.png",
   },
 
   openGraph: {
@@ -54,6 +52,7 @@ export const metadata: Metadata = {
         alt: "InSight PDF - Chat with Your PDFs Using AI",
       },
     ],
+    locale: "en_US",
     type: "website",
   },
   twitter: {
