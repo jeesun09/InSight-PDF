@@ -4,11 +4,15 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Provider from "@/components/Provider";
 import { Toaster } from "react-hot-toast";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "InSight PDF - Chat with Your PDFs Using AI",
+  title: {
+    default: "InSight-PDF",
+    template: "%s - InSight-PDF",
+  },
   description: "Unlock the Power of Your PDFs with AI-Driven Insights.",
   applicationName: "InSight PDF",
   authors: [
@@ -105,6 +109,7 @@ export default function RootLayout({
         <html lang="en">
           <body className={inter.className}>
             {children}
+            <Footer />
             <Toaster />
           </body>
         </html>

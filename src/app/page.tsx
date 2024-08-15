@@ -22,7 +22,7 @@ export default async function Home() {
 
   return (
     <>
-      <div className="w-screen min-h-screen bg-gradient-to-r from-blue-200 to-cyan-200 flex justify-center items-center dark:bg-gradient-to-r dark:from-slate-950 dark:to-slate-950">
+      <div className="w-full min-h-screen bg-gradient-to-r from-blue-200 to-cyan-200 flex justify-center items-center dark:bg-gradient-to-r dark:from-slate-950 dark:to-slate-950">
         <div className="p-4 w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl text-center">
           <div className="flex flex-col items-center">
             <div className="flex flex-row items-center">
@@ -56,7 +56,10 @@ export default async function Home() {
               {isAuth ? (
                 <FileUpload />
               ) : (
-                <Link href="/sign-in" className="flex justify-center items-center">
+                <Link
+                  href="/sign-in"
+                  className="flex justify-center items-center"
+                >
                   <HoverBorderGradient
                     containerClassName="rounded-xl"
                     as="button"
