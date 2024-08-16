@@ -18,11 +18,7 @@ export async function downloadFromS3(file_key: string) {
     };
     const command = new GetObjectCommand(params);
     const response = await s3.send(command);
-    const tmpDir = path.join(__dirname, "tmp");
-    if (!fs.existsSync(tmpDir)) {
-      fs.mkdirSync(tmpDir, { recursive: true });
-    }
-
+    const tmpDir = "/tmp";
     const file_name = path.join(tmpDir, `pdf-${Date.now()}.pdf`);
 
     // Create write stream and pipe the response body to the file
