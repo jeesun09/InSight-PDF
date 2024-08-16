@@ -23,6 +23,8 @@ const FileUpload = () => {
         file_key,
         file_name,
       });
+      console.log("Response", response);
+      
       return response.data;
     },
   });
@@ -42,17 +44,20 @@ const FileUpload = () => {
           toast.error("Something went wrong");
           return;
         }
+        console.log("Data to be sent to mutate:", data);
         mutate(data, {
           onSuccess: ({ chat_id }) => {
             toast.success("Chat created successfully");
             navigate.push(`/chat/${chat_id}`);
           },
           onError: (error) => {
+            console.log("Error creating chat", error);
             toast.error("Error creating chat");
           },
         });
       } catch (error) {
         console.log("Error uploading file", error);
+        toast.error("Error uploading file");
       } finally {
         setUploading(false);
       }
