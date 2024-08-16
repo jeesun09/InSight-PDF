@@ -12,8 +12,6 @@ export async function POST(req: Request) {
   }
   try {
     const body = await req.json();
-    console.log("Body: ", body);
-    
     const { file_key, file_name } = body;
     await loadS3IntoPinecone(file_key);
     const chat_id = await db
