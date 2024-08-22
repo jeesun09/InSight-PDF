@@ -7,6 +7,7 @@ import { eq } from "drizzle-orm";
 import { ArrowRight, LogIn } from "lucide-react";
 import Link from "next/link";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import Footer from "@/components/Footer";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -73,6 +74,7 @@ export default async function Home() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
