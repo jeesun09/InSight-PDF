@@ -13,7 +13,8 @@ export const metadata: Metadata = {
     default: "InSight PDF",
     template: "%s - InSight PDF",
   },
-  description: "Unlock the Power of Your PDFs with AI-Driven Insights.",
+  description:
+    "Unlock the Power of Your PDFs with AI-Driven Insights - Chat with PDF, Enhance Productivity, and Boost Efficiency.",
   applicationName: "InSight PDF",
   authors: [
     { name: "Jeesun Bari", url: "https://www.linkedin.com/in/jeesun30/" },
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
     "document analysis",
     "AI-driven insights",
     "interact with PDFs",
+    "Chat with PDF",
   ],
 
   //icons
@@ -73,26 +75,6 @@ export const metadata: Metadata = {
     capable: true,
     title: "InSight PDF",
     statusBarStyle: "black-translucent",
-  },
-  // Robots directives
-  robots: {
-    index: true,
-    follow: true,
-    nocache: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      noimageindex: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
-  // Format detection
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
   },
 };
 
