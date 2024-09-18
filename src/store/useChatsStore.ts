@@ -7,7 +7,7 @@ export const useChatsStore = create((set) => ({
   chats: [] as DrizzleChat[],
   lastChat: {} as DrizzleChat,
 
-  newChatAdd: async (newChat: DrizzleChat) => {
+  newChatAdd: (newChat: DrizzleChat) => {
     set((state: { chats: DrizzleChat[] }) => ({
       chats: [...state.chats, newChat],
     }));

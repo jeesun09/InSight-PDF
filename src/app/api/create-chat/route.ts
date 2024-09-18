@@ -26,7 +26,8 @@ export async function POST(req: Request) {
         insertedId: chats.id,
       });
     return NextResponse.json(
-      { chat_id: chat_id[0].insertedId }
+      { chat_id: chat_id[0].insertedId },
+      {status: 200}
     );
   } catch (error) {
     return NextResponse.json({ error: "Error creating chat" }, { status: 500 });
