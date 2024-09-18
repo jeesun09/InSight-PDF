@@ -6,14 +6,25 @@ import { Button } from "./ui/button";
 import { MessageCircle, PlusCircle, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { chats as _chats } from "@/lib/db/schema";
+import { useChatsStore } from "@/store/useChatsStore";
+import { useRouter } from "next/navigation";
 
 type Props = {
   chats: DrizzleChat[];
   chatId: number;
-  deleteChat: (chatID: number, fileKey: string) => void;
 };
 
-const ChatSideBar = ({ chats, chatId, deleteChat }: Props) => {
+const ChatSideBar = ({ chats, chatId }: Props) => {
+  const router = useRouter();
+  const { deleteChat, lastChat } = useChatsStore() as {
+    deleteChat: (chatID: number, fileKey: string) => void;
+    lastChat: DrizzleChat;
+  };
+  const handleDeleteChat = (chatID: number, fileKey: string) => {
+    deleteChat(chatID, fileKey);
+    router.push(`/chat/${lastChat.id}`);
+  }
+
   return (
     <div className="w-full h-screen p-4 text-gray-200 relative bg-gray-900">
       <Link href="/">
@@ -35,7 +46,7 @@ const ChatSideBar = ({ chats, chatId, deleteChat }: Props) => {
               <p className="w-full overflow-hidden text-xs lg:text-sm truncate whitespace-nowrap text-ellipsis ">
                 {chat.pdfName}
               </p>
-              <Trash2 onClick={() => deleteChat(chat.id, chat.fileKey)} />
+              <Trash2 onClick={() => handleDeleteChat(chat.id, chat.fileKey)} />
             </div>
           </Link>
         ))}

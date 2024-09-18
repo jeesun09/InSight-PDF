@@ -5,9 +5,6 @@ import ChatSideBar from "@/components/ChatSideBar";
 import PDFViewer from "@/components/PDFViewer";
 import ChatComponent from "@/components/ChatComponent";
 import { PanelRight } from "lucide-react";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 type Props = {
   chatId: number;
@@ -15,24 +12,15 @@ type Props = {
 };
 
 const ChatPage = ({ chatId, chats }: Props) => {
-  const router = useRouter();
   const [panelVisible, setPanelVisible] = useState(false);
   const currentChat = chats.find((chat) => chat.id === chatId);
-
-  const deleteChat = async (chatID: number, fileKey: string) => {
-    const response = await axios.delete(`/api/delete-chat`, {
-      data: { chatID, fileKey },
-    });
-    toast.success(response.data.message);
-    router.push("/");
-  };
 
   return (
     <div className="flex max-h-screen overflow-x-hidden">
       {/* Desktop view */}
       <div className="hidden lg:flex w-full max-h-screen overflow-x-hidden overflow-y-auto">
         <div className="flex-[1] w-[300px]">
-          <ChatSideBar chats={chats} chatId={chatId} deleteChat={deleteChat} />
+          <ChatSideBar chats={chats} chatId={chatId} />
         </div>
         <div className="max-h-screen p-3 overflow-hidden flex-[5]">
           <PDFViewer pdf_url={currentChat?.pdfUrl || ""} />
@@ -46,11 +34,7 @@ const ChatPage = ({ chatId, chats }: Props) => {
       <div className="lg:hidden flex flex-row w-full h-screen overflow-y-auto justify-between">
         {panelVisible ? (
           <div className="h-screen transition-transform duration-500 w-[300px]">
-            <ChatSideBar
-              chats={chats}
-              chatId={chatId}
-              deleteChat={deleteChat}
-            />
+            <ChatSideBar chats={chats} chatId={chatId} />
           </div>
         ) : null}
 
