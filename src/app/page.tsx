@@ -1,25 +1,27 @@
+"use client";
 import FileUpload from "@/components/FileUpload";
-import { db } from "@/lib/db";
-import { chats } from "@/lib/db/schema";
-import { UserButton } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
-import { eq } from "drizzle-orm";
+import { useAuth, UserButton } from "@clerk/nextjs";
 import { ArrowRight, LogIn } from "lucide-react";
 import Link from "next/link";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import Footer from "@/components/Footer";
+import { useChatsStore } from "@/store/useChatsStore";
+import { useEffect } from "react";
+import { DrizzleChat } from "@/lib/db/schema";
 
-export default async function Home() {
-  const { userId } = await auth();
-  const isAuth = !!userId;
-  let lastChat;
-  if (userId) {
-    lastChat = await db.select().from(chats).where(eq(chats.userId, userId));
-    if (lastChat) {
-      const i = lastChat.length;
-      lastChat = lastChat[i - 1];
+export default function Home() {
+  const { isSignedIn } = useAuth();
+  const { fetchChats, lastChat } = useChatsStore() as {
+    fetchChats: () => void;
+    chats: DrizzleChat[];
+    lastChat: DrizzleChat;
+  };
+
+  useEffect(() => {
+    if (isSignedIn) {
+      fetchChats();
     }
-  }
+  }, []);
 
   return (
     <>
@@ -33,7 +35,7 @@ export default async function Home() {
               <UserButton afterSwitchSessionUrl="/" />
             </div>
             <div className="flex mt-3 justify-center">
-              {isAuth && lastChat && (
+              {isSignedIn && lastChat && (
                 <>
                   <Link href={`/chat/${lastChat.id}`}>
                     <HoverBorderGradient
@@ -54,7 +56,7 @@ export default async function Home() {
               Get insights and answers from your PDFs like never before.
             </p>
             <div className="w-full mt-4">
-              {isAuth ? (
+              {isSignedIn ? (
                 <FileUpload />
               ) : (
                 <Link

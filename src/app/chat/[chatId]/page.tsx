@@ -1,11 +1,11 @@
 //chat/[chatId]
-import { auth } from "@clerk/nextjs/server";
-import React from "react";
-import { redirect } from "next/navigation";
-import { db } from "@/lib/db";
-import { eq } from "drizzle-orm";
-import { chats } from "@/lib/db/schema";
+"use client";
+import React from "react";;
+import { DrizzleChat } from "@/lib/db/schema";
 import ChatPage from "@/components/ChatPage";
+import { useChatsStore } from "@/store/useChatsStore";
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 type Props = {
   params: {
@@ -13,17 +13,20 @@ type Props = {
   };
 };
 
-const Page = async ({ params: { chatId } }: Props) => {
-  const { userId } = await auth();
-  if (!userId) {
-    return redirect("/sign-in");
+const Page = ({ params: { chatId } }: Props) => {
+  const router = useRouter();
+  const { chats, } = useChatsStore() as {
+    chats: DrizzleChat[];
   }
-  const _chats = await db.select().from(chats).where(eq(chats.userId, userId));
-  if (!_chats) {
-    return redirect("/");
+  const { isSignedIn } = useAuth();
+  if(!isSignedIn) {
+    return router.push("/sign-in");
+  }
+  if(chats.length === 0) {
+    return router.push("/");
   }
 
-  return <ChatPage chats={_chats} chatId={parseInt(chatId)} />;
+  return <ChatPage chats={chats} chatId={parseInt(chatId)} />;
 };
 
 export default Page;
