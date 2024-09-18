@@ -33,10 +33,11 @@ const FileUpload = () => {
     },
     onSuccess: (data) => {
       newChatAdd(data);
-      const { chat_id } = data;
-      if (chat_id) {
+      const { chatId } = data;
+      console.log("Chat ID: ", chatId);
+      if (chatId) {
         toast.success("Chat created successfully");
-        router.push(`/chat/${chat_id}`);
+        router.push(`/chat/${chatId}`);
       } else {
         console.error("Chat ID missing in response:", data);
         toast.error("Failed to retrieve chat ID.");
@@ -59,7 +60,7 @@ const FileUpload = () => {
         setUploading(true);
         const data = await uploadToS3(file);
         console.log("S3 Upload Response:", data); // Add this line
-        
+
         if (!data?.file_key || !data?.file_name) {
           console.log("uploadToS3 response:", data);
           toast.error("Failed to retrieve upload data.");
