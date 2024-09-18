@@ -1,56 +1,22 @@
 "use client";
-import { DrizzleChat } from "@/lib/db/schema";
 import { uploadToS3 } from "@/lib/s3";
 import { useChatsStore } from "@/store/useChatsStore";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { Inbox, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 
 const FileUpload = () => {
   const router = useRouter();
-  const { newChatAdd } = useChatsStore() as {
-    newChatAdd: (newChat: DrizzleChat) => void;
-  }
+  const { createChat } = useChatsStore() as {
+    createChat: (file_key: string, file_name: string) => Promise<number>;
+  };
   const [uploading, setUploading] = useState<boolean>(false);
-
-  const mutation = useMutation({
-    mutationFn: async ({
-      file_key,
-      file_name,
-    }: {
-      file_key: string;
-      file_name: string;
-    }) => {
-      const response = await axios.post("/api/create-chat", {
-        file_key,
-        file_name,
-      });
-      return response.data;
-    },
-    onSuccess: (data) => {
-      newChatAdd(data);
-      const { chat_id } = data;
-      console.log("Chat ID: ", chat_id);
-      if (chat_id) {
-        toast.success("Chat created successfully");
-        router.push(`/chat/${chat_id}`);
-      } else {
-        console.error("Chat ID missing in response:", data);
-        toast.error("Failed to retrieve chat ID.");
-      }
-    },
-    onError: (error) => {
-      console.error("Mutation error:", error);
-      toast.error("Error creating chat");
-    },
-  });
-
-  const onDrop = useCallback(
-    async (acceptedFiles: File[]) => {
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: { "application/pdf": [".pdf"] },
+    maxFiles: 1,
+    onDrop: async (acceptedFiles) => {
       const file = acceptedFiles[0];
       if (file.size > 5 * 1024 * 1024) {
         toast.error("File size should be less than 5MB");
@@ -59,30 +25,20 @@ const FileUpload = () => {
       try {
         setUploading(true);
         const data = await uploadToS3(file);
-
         if (!data?.file_key || !data?.file_name) {
-          console.log("uploadToS3 response:", data);
-          toast.error("Failed to retrieve upload data.");
+          toast.error("Error uploading file");
           return;
         }
-        mutation.mutate(data);
+        const chatId = await createChat(data.file_key, data.file_name);
+        router.push(`/chats/${chatId}`);
       } catch (error) {
-        console.log("Upload error:", error);
         toast.error("Error uploading file");
+        console.log("Error uploading file", error);
       } finally {
         setUploading(false);
       }
     },
-    [mutation]
-  );
-
-  const { getRootProps, getInputProps } = useDropzone({
-    accept: { "application/pdf": [".pdf"] },
-    maxFiles: 1,
-    onDrop,
   });
-
-  const isUploading = uploading || mutation.isPending;
 
   return (
     <div className="p-2 bg-white rounded-xl">
@@ -96,7 +52,7 @@ const FileUpload = () => {
         })}
       >
         <input {...getInputProps()} />
-        {isUploading ? (
+        {uploading ? (
           <>
             <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
             <p className="mt-2 text-sm text-slate-400 dark:text-stone-200">
