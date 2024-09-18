@@ -1,5 +1,7 @@
 "use client";
+import { DrizzleChat } from "@/lib/db/schema";
 import { uploadToS3 } from "@/lib/s3";
+import { useChatsStore } from "@/store/useChatsStore";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Inbox, Loader2 } from "lucide-react";
@@ -10,6 +12,9 @@ import toast from "react-hot-toast";
 
 const FileUpload = () => {
   const navigate = useRouter();
+  const {chats} = useChatsStore() as {
+    chats: DrizzleChat[];
+  }
   const [uploading, setUploading] = useState<boolean>(false);
   const { mutate, isPending } = useMutation({
     mutationFn: async ({
@@ -23,6 +28,7 @@ const FileUpload = () => {
         file_key,
         file_name,
       });
+      chats.push(...response.data);
       return response.data;
     },
   });
