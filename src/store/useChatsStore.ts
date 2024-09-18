@@ -25,11 +25,16 @@ export const useChatsStore = create((set) => ({
   },
 
   fetchChats: async () => {
-    const { data } = await axios.get("/api/get-chats");
-    set((state: { chats: DrizzleChat[]; lastChat: DrizzleChat | null }) => {
-      state.chats = data;
-      state.lastChat = data.length > 0 ? data[data.length - 1] : null;
-    });
+    try {
+      const { data } = await axios.get("/api/get-chats");
+      set({
+        chats: data,
+        lastChat: data.length > 0 ? data[data.length - 1] : null,
+      })
+    } catch (error) {
+      toast.error("Error fetching chats");
+      console.error("Error fetching chats", error);
+    }
   },
 
   deleteChat: async (chatID: number, fileKey: string) => {
