@@ -7,6 +7,12 @@ export const useChatsStore = create((set) => ({
   chats: [] as DrizzleChat[],
   lastChat: {} as DrizzleChat,
 
+  newChatAdd: async (newChat: DrizzleChat) => {
+    set((state: { chats: DrizzleChat[] }) => ({
+      chats: [...state.chats, newChat],
+    }));
+  },
+
   fetchChats: async () => {
     const { data } = await axios.get("/api/get-chats");
     set({ chats: data });

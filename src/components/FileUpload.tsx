@@ -12,8 +12,8 @@ import toast from "react-hot-toast";
 
 const FileUpload = () => {
   const navigate = useRouter();
-  const {chats} = useChatsStore() as {
-    chats: DrizzleChat[];
+  const {newChatAdd} = useChatsStore() as {
+    newChatAdd: (newChat: DrizzleChat) => void;
   }
   const [uploading, setUploading] = useState<boolean>(false);
   const { mutate, isPending } = useMutation({
@@ -28,7 +28,7 @@ const FileUpload = () => {
         file_key,
         file_name,
       });
-      chats.push(...response.data);
+      newChatAdd(response.data);
       return response.data;
     },
   });
