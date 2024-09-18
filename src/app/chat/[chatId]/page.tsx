@@ -22,7 +22,7 @@ const Page = ({ params: { chatId } }: Props) => {
   if(!isSignedIn) {
     return router.push("/sign-in");
   }
-  if(chats.length === 0) {
+  if(!chats) {
     return router.push("/");
   }
 
