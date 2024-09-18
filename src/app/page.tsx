@@ -9,19 +9,21 @@ import { useChatsStore } from "@/store/useChatsStore";
 import { useEffect } from "react";
 import { DrizzleChat } from "@/lib/db/schema";
 
+interface ChatsStore {
+  fetchChats: () => void;
+  chats: DrizzleChat[];
+  lastChat: DrizzleChat;
+}
+
 export default function Home() {
   const { isSignedIn } = useAuth();
-  const { fetchChats, lastChat } = useChatsStore() as {
-    fetchChats: () => void;
-    chats: DrizzleChat[];
-    lastChat: DrizzleChat;
-  };
+  const { fetchChats, lastChat } = useChatsStore() as ChatsStore;
 
   useEffect(() => {
     if (isSignedIn) {
       fetchChats();
     }
-  }, []);
+  }, [isSignedIn]);
 
   return (
     <>
