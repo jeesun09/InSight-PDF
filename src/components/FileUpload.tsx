@@ -58,14 +58,16 @@ const FileUpload = () => {
       try {
         setUploading(true);
         const data = await uploadToS3(file);
+        console.log("S3 Upload Response:", data); // Add this line
+        
         if (!data?.file_key || !data?.file_name) {
-          console.error("uploadToS3 response:", data);
+          console.log("uploadToS3 response:", data);
           toast.error("Failed to retrieve upload data.");
           return;
         }
         mutation.mutate(data);
       } catch (error) {
-        console.error("Upload error:", error);
+        console.log("Upload error:", error);
         toast.error("Error uploading file");
       } finally {
         setUploading(false);
