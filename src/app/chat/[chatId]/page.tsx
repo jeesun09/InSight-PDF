@@ -15,9 +15,7 @@ type Props = {
 
 const Page = ({ params: { chatId } }: Props) => {
   const router = useRouter();
-  const { chats, } = useChatsStore() as {
-    chats: DrizzleChat[];
-  }
+  const { chats } = useChatsStore() as { chats: DrizzleChat[] };
   const { isSignedIn } = useAuth();
   if(!isSignedIn) {
     return router.push("/sign-in");

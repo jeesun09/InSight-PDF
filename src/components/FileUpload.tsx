@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 const FileUpload = () => {
   const router = useRouter();
   const { createChat } = useChatsStore() as {
-    createChat: (file_key: string, file_name: string) => Promise<number>;
+    createChat: (file_key: string, file_name: string) => Promise<string>;
   };
   const [uploading, setUploading] = useState<boolean>(false);
   const { getRootProps, getInputProps } = useDropzone({

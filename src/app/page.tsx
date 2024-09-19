@@ -20,7 +20,7 @@ export default function Home() {
     if (isSignedIn) {
       fetchChats();
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, fetchChats]);
 
   return (
     <>
