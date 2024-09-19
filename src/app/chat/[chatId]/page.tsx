@@ -16,16 +16,18 @@ type Props = {
 const Page = ({ params: { chatId } }: Props) => {
   const router = useRouter();
   const { isSignedIn } = useAuth();
-  const { chats, fetchChats } = useChatsStore() as {
+  const { chats, fetchChats, loading, error } = useChatsStore() as {
     chats: DrizzleChat[];
     fetchChats: () => void;
+    loading: boolean;
+    error: string | null;
   };
 
   useEffect(() => {
-    if (isSignedIn && chats.length === 0) {
+    if (isSignedIn && chats.length === 0 && !loading) {
       fetchChats();
     }
-  }, [isSignedIn, chats, fetchChats]);
+  }, [isSignedIn, chats, fetchChats, loading]);
 
   // Redirect if not signed in
   useEffect(() => {

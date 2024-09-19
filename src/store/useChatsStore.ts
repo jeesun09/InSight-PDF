@@ -1,11 +1,12 @@
 import { create } from "zustand";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { DrizzleChat } from "@/lib/db/schema";
 
 export const useChatsStore = create((set) => ({
   chats: [],
   lastChat: null,
+  loading: false,
+  error: null,
 
   createChat: async (file_key: string, file_name: string) => {
     try {
@@ -26,15 +27,17 @@ export const useChatsStore = create((set) => ({
   },
 
   fetchChats: async () => {
+    set({ loading: true, error: null});
     try {
       const { data } = await axios.get("/api/get-chats");
       set({
         chats: data || [],
         lastChat: data.length > 0 ? data[data.length - 1] : null,
+        loading: false,
       })
     } catch (error) {
       toast.error("Error fetching chats");
-      set({ chats: [], lastChat: null})
+      set({ chats: [], lastChat: null, loading: false, error: "Error fetching chats" });
     }
   },
 
