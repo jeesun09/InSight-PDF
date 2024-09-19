@@ -1,6 +1,6 @@
 "use client";
 import { uploadToS3 } from "@/lib/s3";
-import { useChatsStore } from "@/store/useChatsStore.js";
+import { useChatsStore } from "@/store/useChatsStore";
 import { Inbox, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
