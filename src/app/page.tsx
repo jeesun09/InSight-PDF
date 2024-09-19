@@ -5,7 +5,7 @@ import { ArrowRight, LogIn } from "lucide-react";
 import Link from "next/link";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import Footer from "@/components/Footer";
-import { useChatsStore } from "@/store/useChatsStore";
+import { useChatsStore } from "@/store/useChatsStore.js";
 import { useEffect } from "react";
 import { DrizzleChat } from "@/lib/db/schema";
 
@@ -20,7 +20,7 @@ export default function Home() {
     if (isSignedIn) {
       fetchChats();
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, fetchChats]);
 
   return (
     <>

@@ -1,6 +1,6 @@
 "use client";
 import { uploadToS3 } from "@/lib/s3";
-import { useChatsStore } from "@/store/useChatsStore";
+import { useChatsStore } from "@/store/useChatsStore.js";
 import { Inbox, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 const FileUpload = () => {
   const router = useRouter();
   const { createChat } = useChatsStore() as {
-    createChat: (file_key: string, file_name: string) => Promise<number>;
+    createChat: (file_key: string, file_name: string) => Promise<string>;
   };
   const [uploading, setUploading] = useState<boolean>(false);
   const { getRootProps, getInputProps } = useDropzone({

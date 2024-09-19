@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
-import { DrizzleChat } from "@/lib/db/schema";
 import toast from "react-hot-toast";
+import { DrizzleChat } from "@/lib/db/schema";
 
 export const useChatsStore = create((set) => ({
   chats: [],
@@ -15,10 +15,11 @@ export const useChatsStore = create((set) => ({
       });
       console.log("Chat created", response.data);
       
-      set((state: { chats: DrizzleChat[] }) => {
-        state.chats = [...state.chats, response.data];
-      });
-      return response.data.id;
+      set((state: any) => ({
+        chats: [...state.chats, response.data],
+        lastChat: response.data,
+      }));
+      return response.data.id.toString();
     } catch (error) {
       console.log("Error creating chat", error);
     }
@@ -28,12 +29,12 @@ export const useChatsStore = create((set) => ({
     try {
       const { data } = await axios.get("/api/get-chats");
       set({
-        chats: data,
+        chats: data || [],
         lastChat: data.length > 0 ? data[data.length - 1] : null,
       })
     } catch (error) {
       toast.error("Error fetching chats");
-      console.error("Error fetching chats", error);
+      set({ chats: [], lastChat: null})
     }
   },
 
@@ -43,13 +44,13 @@ export const useChatsStore = create((set) => ({
         data: { chatID, fileKey },
       });
       toast.success(response.data.message);
-      set((state: { chats: DrizzleChat[]; lastChat: DrizzleChat | null }) => {
-        state.chats = state.chats.filter((chat) => chat.id !== chatID);
-        state.lastChat =
-          state.chats.length > 0 ? state.chats[state.chats.length - 1] : null;
-      });
+      set((state: any) => ({
+        chats: state.chats.filter((chat: { id: number; }) => chat.id !== chatID),
+        lastChat: state.chats.length > 0 ? state.chats[state.chats.length - 2] : null,
+      }));
     } catch (error) {
       toast.error("Error deleting chat");
+      console.log("Error deleting chat", error);
     }
   },
 }));

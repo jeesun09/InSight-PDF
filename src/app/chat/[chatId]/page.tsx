@@ -3,7 +3,7 @@
 import React from "react";;
 import { DrizzleChat } from "@/lib/db/schema";
 import ChatPage from "@/components/ChatPage";
-import { useChatsStore } from "@/store/useChatsStore";
+import { useChatsStore } from "@/store/useChatsStore.js";
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
@@ -15,9 +15,7 @@ type Props = {
 
 const Page = ({ params: { chatId } }: Props) => {
   const router = useRouter();
-  const { chats, } = useChatsStore() as {
-    chats: DrizzleChat[];
-  }
+  const { chats } = useChatsStore((state) => ({ chats: state.chats}))
   const { isSignedIn } = useAuth();
   if(!isSignedIn) {
     return router.push("/sign-in");
